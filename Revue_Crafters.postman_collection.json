@@ -1,0 +1,437 @@
+{
+	"info": {
+		"_postman_id": "ea9580ee-96ce-4ba0-8b24-9b4103566bf4",
+		"name": "Revue_Crafters",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "21002954",
+		"_collection_link": "https://galactic-crescent-233468.postman.co/workspace/Team-Workspace~6f66157a-f56a-4a94-8beb-2c29a868354e/collection/21002954-ea9580ee-96ce-4ba0-8b24-9b4103566bf4?action=share&source=collection_link&creator=21002954"
+	},
+	"item": [
+		{
+			"name": "1.2  Login and Authentication",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Test Login and Aothentication 01. Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"const responseData = pm.response.json(); \r",
+							"\r",
+							"pm.test(\"Test Login and Aothentication 02. Response body has property 'email' \", function() {\r",
+							"    pm.expect(responseData).to.have.property('email');// Check if the 'accessToken' property exists\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Test Login and Aothentication 03. Response body has property 'password' \", function() {\r",
+							"    pm.expect(responseData).to.have.property('password');// Check if the 'accessToken' property exists\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Test Login and Aothentication 04. Response body has property 'accessToken' \", function() {\r",
+							"    pm.expect(responseData).to.have.property('accessToken');// Check if the 'accessToken' property exists\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.collectionVariables.set('accessToken', responseData.accessToken);//setting 'accessToken'\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"Email\":\"penko4itu@mail.com\",\r\n\"password\":\"penkov4ituNaPopravka\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/User/Authentication",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"User",
+						"Authentication"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "1.3.\tCreate a New Revue",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"var randomNumber = Math.floor(Math.random() * 1000);\r",
+							"\r",
+							"var randomTitle = 'Title :' + randomNumber;\r",
+							"\r",
+							"pm.collectionVariables.set('randomTitle', randomTitle)\r",
+							"\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Test Create a New Revue 01. Status code Succseful creation with status code 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"const responseData = pm.response.json();  // Accessing response as JSON instead of text\r",
+							"\r",
+							"const randomTitle = pm.collectionVariables.set(\"title\", pm.response.json().title);\r",
+							"\r",
+							"\r",
+							"pm.test(\"Test Create a New Revue 02. Title Response body property 'Title' has value title\", function() {\r",
+							"    pm.expect(responseData.title).to.eql(pm.collectionVariables.get(\"title\")); // Ensure that the response description is equal to the collection variable description\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Test Create a New Revue 03. Title Response body property 'Title' has value equal to revueTitle \", function() {\r",
+							"const randomTitle = pm.collectionVariables.set(\"title\", pm.response.json().title);\r",
+							"    pm.expect(responseData.title).to.eql(randomTitle); // Ensure that the response description is equal to the collection variable description\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Test Create a New Revue 04. Description Response body property 'Description' has value equal to 'revueDescription'\", function() {\r",
+							"    pm.expect(responseData.title).to.eql(pm.collectionVariables.get(\"description\")); // Ensure that the response description is equal to the collection variable description\r",
+							"});\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							"pm.test(\"Test Create a New Revue 05.  Message Response body property 'Message' exist\", function() {\r",
+							"    pm.expect(responseData).to.have.property('msg'); // Ensure that the response has the property 'msg'\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Test Create a New Revue 06. Message Response body property 'Message' is not empty\", function() {\r",
+							"    pm.expect(responseData.msg).to.not.be.empty; // Ensure that the response message is not empty\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Test Create a New Revue 7. Message Response body property 'Message' has value equal to 'Successfully created!'\", function() {\r",
+							"    pm.expect(responseData.msg).to.eql('Successfully created!'); // Ensure that the response message is 'Successfully created!'\r",
+							"});\r",
+							"\r",
+							"pm.collectionVariables.set(\"revueId\", pm.response.json().revueId);\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"title\": \"{{randomTitle}}\",\r\n\"description\": \"Decription for the revue with the: {{randomTitle}}\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/Revue/Create",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"Revue",
+						"Create"
+					]
+				},
+				"description": "\nThis endpoint makes an HTTP POST request to create a new story. The request should include a payload with the raw request body type containing the \"title\" and \"description\" of the story.\n\n### Request Body\n- title (text, required): The title of the story.\n- description (text, required): The description of the story.\n\n### Response\n- Status: 404\n- Content-Type: text/xml\n\nThe response does not include any specific data.\n"
+			},
+			"response": []
+		},
+		{
+			"name": "1.4. List all Revues",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Test List all Revues 01. Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"const responseData = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Test List all Revues 02. Response type to be Array\", function() {\r",
+							"    pm.expect(responseData).to.be.an(\"array\"); // Ensure that response type is Array.\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Test List all Revues 03. Response type to not be empty with more then 0 items\", function() {\r",
+							"    pm.expect(responseData.length).to.be.greaterThan(0); // Ensure that response Array is not empthy.\r",
+							"});\r",
+							"\r",
+							"const lastRevueId = responseData[responseData.length-1].id\r",
+							"pm.collectionVariables.set(\"lastRevueId\", lastRevueId);// set new collectionVariable \r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/Revue/All",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"Revue",
+						"All"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "1.5.\tEdit the Created Revue",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Test Edit the Created Revue 01. Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"const responseData = pm.response.json(); \r",
+							"\r",
+							"pm.test(\"Test Edit the Created Revue 02. Message Response body property 'Message' exist\", function() {\r",
+							"    pm.expect(responseData).to.have.property('msg'); // Ensure that the variable 'Message' exist\r",
+							"});\r",
+							"pm.test(\"Test Edit the Created Revue 03. Message Response body property 'Message' is not empty\", function() {\r",
+							"    pm.expect(responseData.msg).to.not.be.empty; // Ensure that the variable 'Message' is not empty.\r",
+							"});\r",
+							"pm.test(\"Test Edit the Created Revue 04. Message Response body property 'Message' has value equal to 'Edited successfully'\", function() {\r",
+							"    pm.expect(responseData.msg).to.be.eq('Edited successfully'); // Ensure that the variable 'Message' has value equal to 'Edited successfully'\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Test Edit the Created Revue 05. Response body property 'title' exist\", function() {\r",
+							"    pm.expect(responseData.revue).to.have.property('title'); // Ensure that the variable 'title' exist\r",
+							"});\r",
+							"pm.test(\"Test Edit the Created Revue 06. Response body property 'title' is not empty\", function() {\r",
+							"    pm.expect(responseData.revue.title).to.not.be.empty; // Ensure that the variable 'title' is not empty.\r",
+							"});\r",
+							"pm.test(\"Test Edit the Created Revue 07. Response body property 'title' has value equal to 'Edited Revue`s title'\", function() {\r",
+							"    pm.expect(responseData.revue.title).to.be.eq(\"Edited Revue`s title\"); // Ensure that the variable 'title' has value equal to 'Edited Revue`s title'\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"title\":\"Edited Revue`s title\", \r\n\"description\":\"Decription for the Revue with the: Edited Revue`s title\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/Revue/Edit?revueId={{lastRevueId}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"Revue",
+						"Edit"
+					],
+					"query": [
+						{
+							"key": "revueId",
+							"value": "{{lastRevueId}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "1.6. Delete the Edited Revue",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Test Delete the Edited Revue 01. Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"const responseText = pm.response.text(); \r",
+							"\r",
+							"const responceLenght = responseText.length;\r",
+							"\r",
+							"pm.test(\"Test Delete the Edited Revue 02. Response type to be String\", function() {\r",
+							"    pm.expect(responseText).is.a(\"string\"); // Ensure that response type is String.\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Test Delete the Edited Revue 03. Response type to not be empty\", function() {\r",
+							"    pm.expect(responceLenght).to.be.greaterThan(0); // Ensure that response is not String empthy.\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Test Delete the Edited Revue 04. Response body property 'Message' has value equal to 'The revue is deleted!'\", function() {\r",
+							"    pm.expect(responseText).to.contain('The revue is deleted!'); // Ensure that the response message is 'The revue is deleted!'\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/Revue/Delete?revueId={{lastRevueId}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"Revue",
+						"Delete"
+					],
+					"query": [
+						{
+							"key": "revueId",
+							"value": "{{lastRevueId}}"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{accessToken}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "https://d2925tksfvgq8c.cloudfront.net",
+			"type": "string"
+		},
+		{
+			"key": "accessToken",
+			"value": ""
+		},
+		{
+			"key": "randomTitle",
+			"value": ""
+		},
+		{
+			"key": "revueId",
+			"value": ""
+		},
+		{
+			"key": "lastRevueId",
+			"value": ""
+		},
+		{
+			"key": "title",
+			"value": ""
+		}
+	]
+}
