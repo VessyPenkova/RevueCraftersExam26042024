@@ -64,7 +64,7 @@ namespace RevueCrafters
             this._response = this._client.Execute(_request);
             var responseData = JsonSerializer.Deserialize<ApiResponseDTO>(_response.Content);
             responseData.StatusCode = _response.StatusCode;
-            string expectedMessage = "Successfully created!";
+            string expectedMessage = "Edited successfully";
          
 
             //Assert
@@ -134,7 +134,7 @@ namespace RevueCrafters
             _response = this._client.Execute(_request);
             _responseData = JsonSerializer.Deserialize<ApiResponseDTO>(_response.Content);
             _responseData.StatusCode = _response.StatusCode;
-            string expectedMessage = "Successfully edited";
+            string expectedMessage = "Edited successfully";
 
 
             //Assert
