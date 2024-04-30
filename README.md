@@ -1,1 +1,1 @@
-![alt text](https://github.com/VessyPenkova/Sertificates/blob/main/BackEndTestAutomationMar2024%20.png?raw=true) 
+![alt text](https://github.com/VessyPenkova/RevueCraftersExam26042024/blob/master/Certificate.png?raw=true) 
